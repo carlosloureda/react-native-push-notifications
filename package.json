@@ -1,0 +1,14 @@
+{
+  "name": "react-native-push-example",
+  "version": "1.0.0",
+  "description": "An example mobile app and server for push notifications",
+  "main": "index.js",
+  "license": "MIT",
+  "private": true,
+  "workspaces": {
+    "packages": [
+      "packages/*"
+    ],
+    "nohoist": []
+  }
+}
