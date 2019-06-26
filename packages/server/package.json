@@ -1,11 +1,12 @@
 {
-  "name": "lou-rnptserver",
+  "name": "lou-rnpt-server",
   "private": true,
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
   "dependencies": {
     "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
     "expo-server-sdk": "^3.3.0",
     "express": "^4.17.1"
   },
