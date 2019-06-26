@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { Permissions, Notifications } from "expo";
 
-const PUSH_REGISTRATION_ENDPOINT = "http://05463050.ngrok.io/token";
+const PUSH_REGISTRATION_ENDPOINT = "http://49c4add7.ngrok.io/token";
 // const MESSAGE_ENPOINT = "http://localhost:3000/message";
 
 const App = () => {
@@ -38,7 +38,8 @@ const App = () => {
       method: "POST",
       headers: {
         Accept: "application/json",
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
+        crossOrigin: false
       },
       body: JSON.stringify({
         token: {
@@ -49,13 +50,20 @@ const App = () => {
         }
       })
     });
+    //  setup an event listener to listen to any notifications that occur
+    // while the app is open and foregrounded
+    this.notificationSubscription = Notifications.addListener(
+      this.handleNotification
+    );
   };
 
   handleNotification = notification => {
+    console.log("A notification appeared");
     setNotification(notification);
   };
 
   useEffect(() => {
+    console.log("use effect");
     registerForPushNotificationsAsync();
   });
 
