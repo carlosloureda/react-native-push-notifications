@@ -1,6 +1,6 @@
 import React from "react";
 import "./App.css";
-const MESSAGE_ENPOINT = "http://9a6d8012.ngrok.io/message";
+import { MESSAGE_ENPOINT } from "lou-rnpt-common";
 
 export default class App extends React.Component {
   state = {

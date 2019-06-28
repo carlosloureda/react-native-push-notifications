@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { StyleSheet, Text, View, AppState, Alert } from "react-native";
 import { Permissions, Notifications } from "expo";
-
-const PUSH_REGISTRATION_ENDPOINT = "http://9a6d8012.ngrok.io/token";
+import { PUSH_REGISTRATION_ENDPOINT } from "lou-rnpt-common";
 
 const App = () => {
   /**
