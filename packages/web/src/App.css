@@ -22,6 +22,19 @@
 .App-link {
   color: #61dafb;
 }
+.rowForm {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.2em;
+}
+.textInput {
+  margin-left: 2em;
+}
+.buttonForm {
+  width: 96%;
+  height: 4em;
+  margin-top: 2em;
+}
 
 @keyframes App-logo-spin {
   from {

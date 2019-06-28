@@ -28,8 +28,8 @@ app.post("/token", (req, res) => {
 
 app.post("/message", (req, res) => {
   sendMessage(req.body.message);
-  console.log(`Received message, ${req.body.message}`);
-  res.send(`Received message, ${req.body.message}`);
+  console.log(`Received message, ${req.body.message.body}`);
+  res.send(`Received message, ${req.body.message.body}`);
 });
 app.listen(3000, function() {
   console.log("Example app listening on port 3000!");

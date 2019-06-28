@@ -22,10 +22,7 @@ const App = () => {
   handleNotification = notification => {
     if (appState === "active" && notification.origin === "received") {
       Notifications.dismissNotificationAsync(notification.notificationId);
-      Alert.alert(
-        "Notification Title",
-        "Here we show a custom in app notification instead of system one as app is on the foreground and active"
-      );
+      Alert.alert(notification.data.title, notification.data.body);
       setNotification(null);
     } else {
       setNotification(notification);
@@ -95,6 +92,8 @@ const App = () => {
         {notification && (
           <>
             <Text>Origin: {notification.origin}</Text>
+            <Text>Title: {notification.data.title}</Text>
+            <Text>Message: {notification.data.body}</Text>
             <Text>Data: {JSON.stringify(notification.data)}</Text>
           </>
         )}

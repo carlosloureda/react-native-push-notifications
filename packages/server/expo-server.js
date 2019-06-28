@@ -8,6 +8,21 @@ export const saveToken = token => {
   }
 };
 
+// type PushMessage = {
+//   to : string,
+//   data ?: Object,
+//   title ?: string,
+//   body ?: string,
+//   ttl ?: number,
+//   expiration?: number,
+//   priority ?: 'default' | 'normal' | 'high',
+//   subtitle ?: string,
+//   sound ?: 'default' | null,
+//   badge ?: number,
+//   _category ?: string,
+//   channelId ?: string
+// }
+
 export const sendMessage = message => {
   // Manage array of messages
   let notifications = [];
@@ -19,9 +34,9 @@ export const sendMessage = message => {
     notifications.push({
       to: pushToken,
       sound: "default",
-      title: "Message received!",
-      body: message,
-      data: { message }
+      title: message.title,
+      body: message.body,
+      data: message // TODO: message or message.data ?
     });
   }
   // Send the messages via chunkPushNotifications and sendPushNotificationsAsync

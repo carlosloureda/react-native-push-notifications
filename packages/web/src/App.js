@@ -4,7 +4,14 @@ const MESSAGE_ENPOINT = "http://9a6d8012.ngrok.io/message";
 
 export default class App extends React.Component {
   state = {
-    message: ""
+    notification: {
+      title: "",
+      body: "",
+      data: {
+        screen: "UserSettings",
+        userId: "123"
+      }
+    }
   };
 
   sendMessage = e => {
@@ -16,22 +23,52 @@ export default class App extends React.Component {
         "Content-Type": "application/json",
         crossOrigin: false
       },
-      body: JSON.stringify({ message: this.state.message })
+      body: JSON.stringify({ message: this.state.notification })
     }).catch(e => console.warn("error fetching: ", e));
   };
   render() {
+    const { notification } = this.state;
     return (
       <div className="App">
         <header className="App-header">
           <h1>Send a notification to the mobile device:</h1>
           <form>
-            <input
-              type="text"
-              value={this.state.message}
-              onChange={e => this.setState({ message: e.target.value })}
-            />
+            <div className="rowForm">
+              <label>Title:</label>
+              <input
+                type="text"
+                value={notification.title}
+                onChange={e =>
+                  this.setState({
+                    notification: {
+                      ...notification,
+                      title: e.target.value
+                    }
+                  })
+                }
+                className="textInput"
+              />
+            </div>
+            <div className="rowForm">
+              <label>Message:</label>
+              <input
+                type="text"
+                value={notification.body}
+                onChange={e =>
+                  this.setState({
+                    notification: {
+                      ...notification,
+                      body: e.target.value
+                    }
+                  })
+                }
+                className="textInput"
+              />
+            </div>
 
-            <button onClick={e => this.sendMessage(e)}>Send</button>
+            <button className="buttonForm" onClick={e => this.sendMessage(e)}>
+              Send
+            </button>
           </form>
         </header>
       </div>
