@@ -41,11 +41,14 @@ export const sendMessage = message => {
   }
   // Send the messages via chunkPushNotifications and sendPushNotificationsAsync
   let chunks = expo.chunkPushNotifications(notifications);
+  let tickets = [];
   (async () => {
     for (let chunk of chunks) {
       try {
-        let receipts = await expo.sendPushNotificationsAsync(chunk);
-        console.log(receipts);
+        let ticketChunk = await expo.sendPushNotificationsAsync(chunk);
+        tickets.push(...ticketChunk);
+        console.log("ticketChunk: ", ticketChunk);
+        // TODO: Handle errors
       } catch (error) {
         console.error(error);
       }
