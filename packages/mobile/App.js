@@ -1,25 +1,35 @@
 import React, { useState, useEffect } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View, AppState, Alert } from "react-native";
 import { Permissions, Notifications } from "expo";
 
 const PUSH_REGISTRATION_ENDPOINT = "http://9a6d8012.ngrok.io/token";
 
 const App = () => {
-  // let _notificationSubscription = null;
+  /**
+   * manage App State for checking if app is active and foreground
+   */
+  let appState = "active";
+
+  useEffect(() => {
+    AppState.addEventListener("change", handleAppStateChange);
+    return function() {
+      AppState.removeEventListener("change", handleAppStateChange);
+    };
+  }, []);
+
+  handleAppStateChange = nextAppState => (appState = nextAppState);
 
   handleNotification = notification => {
-    /**
-     * notification.origin =
-     * - 'received' :
-     *    - App is open and foregrounded
-     * - 'selected':
-     *    - App is open and backgrounded, then notification is selected
-     *    - pp was not open, and then opened by selecting the push notification
-     * - n/a || null:
-     *    - App is open and backgrounded, then notification not selected
-     *    - App is open and backgrounded, then notification not selected
-     */
-    setNotification(notification);
+    if (appState === "active" && notification.origin === "received") {
+      Notifications.dismissNotificationAsync(notification.notificationId);
+      Alert.alert(
+        "Notification Title",
+        "Here we show a custom in app notification instead of system one as app is on the foreground and active"
+      );
+      setNotification(null);
+    } else {
+      setNotification(notification);
+    }
   };
 
   /**
