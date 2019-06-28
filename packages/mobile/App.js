@@ -2,10 +2,26 @@ import React, { useState, useEffect } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { Permissions, Notifications } from "expo";
 
-const PUSH_REGISTRATION_ENDPOINT = "http://49c4add7.ngrok.io/token";
-// const MESSAGE_ENPOINT = "http://localhost:3000/message";
+const PUSH_REGISTRATION_ENDPOINT = "http://9a6d8012.ngrok.io/token";
 
 const App = () => {
+  // let _notificationSubscription = null;
+
+  handleNotification = notification => {
+    /**
+     * notification.origin =
+     * - 'received' :
+     *    - App is open and foregrounded
+     * - 'selected':
+     *    - App is open and backgrounded, then notification is selected
+     *    - pp was not open, and then opened by selecting the push notification
+     * - n/a || null:
+     *    - App is open and backgrounded, then notification not selected
+     *    - App is open and backgrounded, then notification not selected
+     */
+    setNotification(notification);
+  };
+
   /**
    * Register Token for Push Notifications
    */
@@ -33,6 +49,10 @@ const App = () => {
     let token = await Notifications.getExpoPushTokenAsync();
     console.log("token is:", token);
 
+    //  setup an event listener to listen to any notifications that occur
+    // while the app is open and foregrounded
+    Notifications.addListener(handleNotification);
+
     // POST the token to your backend server from where you can retrieve it to send push notifications.
     return fetch(PUSH_REGISTRATION_ENDPOINT, {
       method: "POST",
@@ -50,29 +70,28 @@ const App = () => {
         }
       })
     });
-    //  setup an event listener to listen to any notifications that occur
-    // while the app is open and foregrounded
-    this.notificationSubscription = Notifications.addListener(
-      this.handleNotification
-    );
-  };
-
-  handleNotification = notification => {
-    console.log("A notification appeared");
-    setNotification(notification);
   };
 
   useEffect(() => {
-    console.log("use effect");
     registerForPushNotificationsAsync();
-  });
+  }, []);
 
   const [notification, setNotification] = useState(null);
   const [messageText, setMessageText] = useState("");
 
   return (
     <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
+      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+        {notification && (
+          <>
+            <Text>Origin: {notification.origin}</Text>
+            <Text>Data: {JSON.stringify(notification.data)}</Text>
+          </>
+        )}
+        {!notification && (
+          <Text>Here will appear notification if some appear</Text>
+        )}
+      </View>
     </View>
   );
 };

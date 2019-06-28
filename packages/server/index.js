@@ -16,6 +16,10 @@ app.get("/", function(req, res) {
   res.send("Hello World!");
 });
 
+app.get("/auth2", function(req, res) {
+  res.send("auth2 path!");
+});
+
 app.post("/token", (req, res) => {
   saveToken(req.body.token.value);
   console.log(`Received push token, ${req.body.token.value}`);
